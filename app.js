@@ -19,6 +19,7 @@ const sb1 = {
     y: canvas.height/2-60,
     w: 30,
     h: 120,
+    dy: 30
 }
 const sb2 = {
     x: canvas.width,
@@ -40,6 +41,7 @@ function drawPaddle2(){
     ctx.fill();
     ctx.closePath();
 }
+
 //draw line
 var gap = 25
 function drawLine(){
@@ -122,12 +124,6 @@ function moveBall(){
    
     
 }
-// const sb2 = {
-//     x: canvas.width,
-//     y: canvas.height/2-30,
-//     w: -30,
-//     h: 120,
-// }
 
 
 
@@ -146,3 +142,16 @@ function animate(){
     moveBall();
 }
 animate();
+
+addEventListener('keydown',function(e){
+    if (e.key === 'ArrowUp'){
+        sb1.y -= sb1.dy;
+    } else if (e.key ==='ArrowDown'){
+        sb1.y += sb1.dy;
+    }
+    if (sb1.y+sb1.h > canvas.height){
+        sb1.y = canvas.height - sb1.h;
+    } else if (sb1.y < 0){
+        sb1.y = 0;
+    }
+})
