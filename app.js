@@ -16,16 +16,18 @@ function drawText(){
 //create scoreBoard
 const sb1 = {
     x: canvas.width - canvas.width,
-    y: canvas.height/2-60,
+    y: canvas.height/2-70,
     w: 30,
-    h: 120,
+    h: 140,
     dy: 30
 }
-const sb2 = {
+let sb2 = {
     x: canvas.width,
-    y: canvas.height/2-30,
+    y: canvas.height/2-70,
     w: -30,
-    h: 120,
+    h: 140,
+    
+
 }
 function drawPaddle(){
     ctx.beginPath();
@@ -70,7 +72,7 @@ var ball = {
     x: canvas.width/2,
     y: canvas.height/2,
     radius: 20,
-    dx: 10,
+    dx: -10,
     dy: 2,
     visible: true,
 }
@@ -85,17 +87,13 @@ function moveBall(){
     ball.x += ball.dx;
     ball.y +=ball.dy;
     //wall detection
-    if (ball.x + ball.radius > canvas.width || ball.x-ball.radius < 0){
-        ball.dx = -ball.dx;
-    }
+    // if (ball.x + ball.radius > canvas.width || ball.x-ball.radius < 0){
+    //     ball.dx = -ball.dx;
+    // }
     if (ball.y + ball.radius > canvas.height || ball.y-ball.radius < 0){
         ball.dy = -ball.dy;
     }
-    //  //hit paddel
-    //  if (ball.x+ball.radius<sb2.x&& ball.y+ball.radius>sb2.y&&ball.y-ball.radius<sb2.y+sb2.h){
-    //     ball.dx -=ball.dx;
-    //     ball.dy -=ball.dy;
-    // }
+    
     //hit wall
     if (ball.x + ball.radius > canvas.width){
         score2++;
@@ -121,8 +119,32 @@ function moveBall(){
         ball.dy = 0;
         ball.visible = true;
     }
-   
+   //hit paddle
+    if (ball.x+ball.radius > sb1.x && 
+        ball.x-ball.radius < sb1.x+sb1.w && 
+        ball.y+ball.radius > sb1.y){
+        ball.dx = -ball.dx;
+    }
+    if (ball.x+ball.radius > sb2.x && 
+        ball.x-ball.radius < sb2.x+sb2.w && 
+        ball.y+ball.radius > sb2.y){
+        ball.dx = -ball.dx;
+    }
     
+}
+
+// const sb2 = {
+//     x: canvas.width,
+//     y: canvas.height/2-70,
+//     w: -30,
+//     h: 140,
+// }
+//move paddle2
+
+function movePaddle2() {
+    if ((sb2.x -ball.x) < 700) {
+        sb2.y = ball.y-70;
+    }
 }
 
 
@@ -140,6 +162,7 @@ function animate(){
     ctx.clearRect(0,0,innerWidth,innerHeight);
     draw();
     moveBall();
+    movePaddle2();
 }
 animate();
 
